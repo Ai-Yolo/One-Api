@@ -29,6 +29,11 @@ const PasswordResetForm = () => {
     return () => clearInterval(countdownInterval); // Clean up on unmount
   }, [disableButton, countdown]);
 
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInputs(inputs => ({ ...inputs, [name]: value }));
+  }
+
   async function handleSubmit(e) {
     if (!email) return;
     if (turnstileEnabled && turnstileToken === '') {
