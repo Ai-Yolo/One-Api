@@ -12,6 +12,11 @@ const PasswordResetConfirm = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [disableButton, setDisableButton] = useState(false);
+  const [countdown, setCountdown] = useState(30);
+
+  const [newPassword, setNewPassword] = useState('');
+
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     let token = searchParams.get('token');
@@ -21,6 +26,19 @@ const PasswordResetConfirm = () => {
       email,
     });
   }, []);
+
+  useEffect(() => {
+    let countdownInterval = null;
+    if (disableButton && countdown > 0) {
+      countdownInterval = setInterval(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      setDisableButton(false);
+      setCountdown(30);
+    }
+    return () => clearInterval(countdownInterval); // Clean up on unmount
+  }, [disableButton, countdown]);
 
   async function handleSubmit(e) {
     if (!email) return;
@@ -32,8 +50,10 @@ const PasswordResetConfirm = () => {
     const { success, message } = res.data;
     if (success) {
       let password = res.data.data;
+      setNewPassword(password);
       await copy(password);
       showNotice(`密码已重置并已复制到剪贴板：${password}`);
+      setDisableButton(true); // Disable the button after successful submission
     } else {
       showError(message);
     }
@@ -57,14 +77,26 @@ const PasswordResetConfirm = () => {
               value={email}
               readOnly
             />
+            {newPassword && (
+              <Form.Input
+                fluid
+                icon='lock'
+                iconPosition='left'
+                placeholder='新密码'
+                name='newPassword'
+                value={newPassword}
+                readOnly
+              />
+            )}
             <Button
-              color=''
+              color='green'
               fluid
               size='large'
               onClick={handleSubmit}
               loading={loading}
+              disabled={disableButton}
             >
-              提交
+              {disableButton ? `提交 (${countdown})` : '提交'}
             </Button>
           </Segment>
         </Form>
