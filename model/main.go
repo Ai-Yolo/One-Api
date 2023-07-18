@@ -60,31 +60,31 @@ func InitDB() (err error) {
 		if !common.IsMasterNode {
 			return nil
 		}
-		err := migrateTable(&Channel{})
+		err := db.AutoMigrate(&Channel{})
 		if err != nil {
 			return err
 		}
-		err = migrateTable(&Token{})
+		err = db.AutoMigrate(&Token{})
 		if err != nil {
 			return err
 		}
-		err = migrateTable(&User{})
+		err = db.AutoMigrate(&User{})
 		if err != nil {
 			return err
 		}
-		err = migrateTable(&Option{})
+		err = db.AutoMigrate(&Option{})
 		if err != nil {
 			return err
 		}
-		err = migrateTable(&Redemption{})
+		err = db.AutoMigrate(&Redemption{})
 		if err != nil {
 			return err
 		}
-		err = migrateTable(&Ability{})
+		err = db.AutoMigrate(&Ability{})
 		if err != nil {
 			return err
 		}
-		err = migrateTable(&Log{})
+		err = db.AutoMigrate(&Log{})
 		if err != nil {
 			return err
 		}
@@ -104,14 +104,4 @@ func CloseDB() error {
 	}
 	err = sqlDB.Close()
 	return err
-}
-
-func migrateTable(table interface{}) error {
-	if !DB.Migrator().HasTable(table) {
-		err := DB.AutoMigrate(table)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }

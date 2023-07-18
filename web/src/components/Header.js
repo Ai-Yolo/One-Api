@@ -59,7 +59,7 @@ let headerButtons = [
 ];
 
 if (localStorage.getItem('chat_link')) {
-  headerButtons.splice(1, 0, {
+  headerButtons.push({
     name: '公告',
     to: '/chat',
     icon: 'comments'
