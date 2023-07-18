@@ -136,7 +136,7 @@ const LoginForm = () => {
         </Message>
         {status.github_oauth || status.wechat_login ? (
           <>
-            <Divider horizontal>Or</Divider>
+            <Divider horizontal>开发者Github登录/注册</Divider>
             {status.github_oauth ? (
               <Button
                 circular
