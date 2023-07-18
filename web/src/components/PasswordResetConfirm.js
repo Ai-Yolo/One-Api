@@ -41,6 +41,7 @@ const PasswordResetConfirm = () => {
   }, [disableButton, countdown]);
 
   async function handleSubmit(e) {
+    setDisableButton(true); // Disable the button as soon as it's clicked
     if (!email) return;
     setLoading(true);
     const res = await API.post(`/api/user/reset`, {
@@ -53,7 +54,6 @@ const PasswordResetConfirm = () => {
       setNewPassword(password);
       await copy(password);
       showNotice(`密码已重置并已复制到剪贴板：${password}`);
-      setDisableButton(true); // Disable the button after successful submission
     } else {
       showError(message);
     }
@@ -88,21 +88,23 @@ const PasswordResetConfirm = () => {
                 readOnly
               />
             )}
-            <Button
-              color='green'
-              fluid
-              size='large'
-              onClick={handleSubmit}
-              loading={loading}
-              disabled={disableButton}
-            >
-              {disableButton ? `密码重置完成 (${countdown})` : '提交'}
-            </Button>
+            {!newPassword && (
+              <Button
+                color='green'
+                fluid
+                size='large'
+                onClick={handleSubmit}
+                loading={loading}
+                disabled={disableButton}
+              >
+                {disableButton ? `密码重置中 (${countdown})` : '提交'}
+              </Button>
+            )}
           </Segment>
         </Form>
       </Grid.Column>
     </Grid>
-  );
+  );  
 };
 
 export default PasswordResetConfirm;

@@ -135,13 +135,6 @@ func SendPasswordResetEmail(c *gin.Context) {
 		})
 		return
 	}
-	if !checkEmailDomain(email) {
-		c.JSON(http.StatusOK, gin.H{
-			"success": false,
-			"message": "该邮箱不支持",
-		})
-		return
-	}
 	if !model.IsEmailAlreadyTaken(email) {
 		c.JSON(http.StatusOK, gin.H{
 			"success": false,
