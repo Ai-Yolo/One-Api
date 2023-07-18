@@ -53,7 +53,7 @@ const PasswordResetConfirm = () => {
       let password = res.data.data;
       setNewPassword(password);
       await copy(password);
-      showNotice(`密码已重置并已复制到剪贴板：${password}`);
+      showNotice(`新密码已复制到剪贴板：${password}`);
     } else {
       showError(message);
     }
@@ -64,7 +64,7 @@ const PasswordResetConfirm = () => {
     <Grid textAlign='center' style={{ marginTop: '48px' }}>
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' color='' textAlign='center'>
-          <Image src='/logo.png' /> {disableButton ? '密码重置完成' : '密码重置确认'}
+          <Image src='/logo.png' /> {disableButton ? '密码重置' : '密码重置'}
         </Header>
         <Form size='large'>
           <Segment>
