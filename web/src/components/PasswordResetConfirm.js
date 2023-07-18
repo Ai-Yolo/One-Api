@@ -59,12 +59,12 @@ const PasswordResetConfirm = () => {
     }
     setLoading(false);
   }
-
+  
   return (
     <Grid textAlign='center' style={{ marginTop: '48px' }}>
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as='h2' color='' textAlign='center'>
-          <Image src='/logo.png' /> 密码重置确认
+          <Image src='/logo.png' /> {disableButton ? '密码重置完成' : '密码重置确认'}
         </Header>
         <Form size='large'>
           <Segment>
@@ -79,27 +79,30 @@ const PasswordResetConfirm = () => {
             />
             {newPassword && (
               <Form.Input
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='新密码'
-                name='newPassword'
-                value={newPassword}
-                readOnly
-              />
+              fluid
+              icon='lock'
+              iconPosition='left'
+              placeholder='新密码'
+              name='newPassword'
+              value={newPassword}
+              readOnly
+              onClick={(e) => {
+                e.target.select();
+                navigator.clipboard.writeText(newPassword);
+                showNotice(`密码已复制到剪贴板：${newPassword}`);
+              }}
+            />            
             )}
-            {!newPassword && (
-              <Button
-                color='green'
-                fluid
-                size='large'
-                onClick={handleSubmit}
-                loading={loading}
-                disabled={disableButton}
-              >
-                {disableButton ? `密码重置中 (${countdown})` : '提交'}
-              </Button>
-            )}
+            <Button
+              color='green'
+              fluid
+              size='large'
+              onClick={handleSubmit}
+              loading={loading}
+              disabled={disableButton}
+            >
+              {disableButton ? `密码重置完成` : '提交'}
+            </Button>
           </Segment>
         </Form>
       </Grid.Column>
