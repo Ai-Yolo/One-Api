@@ -35,6 +35,7 @@ const PasswordResetForm = () => {
   }
 
   async function handleSubmit(e) {
+    setDisableButton(true); // Disable the button as soon as it's clicked
     if (!email) return;
     if (turnstileEnabled && turnstileToken === '') {
       showInfo('请稍后几秒重试，Turnstile 正在检查用户环境！');
@@ -48,7 +49,6 @@ const PasswordResetForm = () => {
     if (success) {
       showSuccess('重置邮件发送成功，请检查邮箱！');
       setInputs({ ...inputs, email: '' });
-      setDisableButton(true); // Disable the button after successful submission
     } else {
       showError(message);
     }
@@ -90,7 +90,7 @@ const PasswordResetForm = () => {
               loading={loading}
               disabled={disableButton}
             >
-              {disableButton ? `提交 (${countdown})` : '提交'}
+              {disableButton ? `重试 (${countdown})` : '提交'}
             </Button>
           </Segment>
         </Form>

@@ -96,7 +96,7 @@ const PasswordResetConfirm = () => {
               loading={loading}
               disabled={disableButton}
             >
-              {disableButton ? `提交 (${countdown})` : '提交'}
+              {disableButton ? `密码重置完成 (${countdown})` : '提交'}
             </Button>
           </Segment>
         </Form>
