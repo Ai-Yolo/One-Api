@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 	"one-api/common"
 	"one-api/model"
 )
@@ -69,12 +70,31 @@ func GetHomePageContent(c *gin.Context) {
 	return
 }
 
+func checkEmailDomain(email string) bool {
+	validDomains := []string{"@gmail.com", "@hotmail.com", "@yahoo.com", "@outlook.com", "@icloud.com", "@qq.com", "@163.com", "@sina.com", "@aliyun.com", "@yeah.net", "@live.com", "@126.com", "@foxmail.com", "@139.com", "@sohu.com", "@tom.com", "@vip.qq.com", "@21cn.com", "@189.cn"}
+
+	// check if email domain is in the list of valid domains
+	for _, domain := range validDomains {
+		if strings.HasSuffix(email, domain) {
+			return true
+		}
+	}
+	return false
+}
+
 func SendEmailVerification(c *gin.Context) {
 	email := c.Query("email")
 	if err := common.Validate.Var(email, "required,email"); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"success": false,
 			"message": "无效的参数",
+		})
+		return
+	}
+	if !checkEmailDomain(email) {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "该邮箱不支持",
 		})
 		return
 	}
@@ -112,6 +132,13 @@ func SendPasswordResetEmail(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"success": false,
 			"message": "无效的参数",
+		})
+		return
+	}
+	if !checkEmailDomain(email) {
+		c.JSON(http.StatusOK, gin.H{
+			"success": false,
+			"message": "该邮箱不支持",
 		})
 		return
 	}

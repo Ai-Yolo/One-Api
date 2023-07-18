@@ -10,7 +10,7 @@ const TopUp = () => {
 
   const topUp = async () => {
     if (redemptionCode === '') {
-      showInfo('请输入充值码！')
+      showInfo('请输入兑换码！')
       return;
     }
     const res = await API.post('/api/user/topup', {
@@ -71,11 +71,11 @@ const TopUp = () => {
                 setRedemptionCode(e.target.value);
               }}
             />
-            <Button color='green' onClick={openTopUpLink}>
-              获取兑换码
+            <Button color='red' onClick={openTopUpLink}>
+              购买兑换码
             </Button>
-            <Button color='yellow' onClick={topUp}>
-              充值
+            <Button color='green' onClick={topUp}>
+              兑换
             </Button>
           </Form>
         </Grid.Column>

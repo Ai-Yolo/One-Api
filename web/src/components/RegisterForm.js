@@ -26,6 +26,8 @@ const RegisterForm = () => {
   const [turnstileSiteKey, setTurnstileSiteKey] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [loading, setLoading] = useState(false);
+  const [verificationButtonDisabled, setVerificationButtonDisabled] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(null);
   const logo = getLogo();
   let affCode = new URLSearchParams(window.location.search).get('aff');
   if (affCode) {
@@ -103,6 +105,18 @@ const RegisterForm = () => {
       showError(message);
     }
     setLoading(false);
+
+    setVerificationButtonDisabled(true);
+    setTimeLeft(30);
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+
+    setTimeout(() => {
+      setVerificationButtonDisabled(false);
+      setTimeLeft(null);
+      clearInterval(timer);
+    }, 30000);
   };
 
   return (
@@ -150,8 +164,8 @@ const RegisterForm = () => {
                   name='email'
                   type='email'
                   action={
-                    <Button onClick={sendVerificationCode} disabled={loading}>
-                      获取验证码
+                    <Button onClick={sendVerificationCode} disabled={loading || verificationButtonDisabled}>
+                      {verificationButtonDisabled ? `剩余 ${timeLeft} 秒` : '获取验证码'}
                     </Button>
                   }
                 />

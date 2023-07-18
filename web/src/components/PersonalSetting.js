@@ -116,12 +116,12 @@ const PersonalSetting = () => {
     <div style={{ lineHeight: '40px' }}>
       <Header as='h3'>通用设置</Header>
       <Message>
-        注意，此处生成的令牌用于系统管理，而非用于请求 OpenAI 相关的服务，请知悉。
+        每邀请一位新用户，您和被邀请用户均可获得1元(100000令牌)的奖励。
       </Message>
       <Button as={Link} to={`/user/edit/`}>
         更新个人信息
       </Button>
-      <Button onClick={generateAccessToken}>生成系统访问令牌</Button>
+      {/* <Button onClick={generateAccessToken}>生成系统访问令牌</Button> */}
       <Button onClick={getAffLink}>复制邀请链接</Button>
       <Divider />
       <Header as='h3'>账号绑定</Header>
