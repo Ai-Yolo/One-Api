@@ -125,18 +125,17 @@ const LoginForm = () => {
           </Segment>
         </Form>
         <Message>
-          忘记密码？
           <Link to="/reset" className="btn btn-link">
-            点击重置
+          忘记密码
           </Link>
-          ； 没有账户？
+           | 
           <Link to="/register" className="btn btn-link">
-            点击注册
+          账户注册
           </Link>
         </Message>
         {status.github_oauth || status.wechat_login ? (
           <>
-            <Divider horizontal>Or</Divider>
+            <Divider horizontal>开发者可选Github登录注册</Divider>
             {status.github_oauth ? (
               <Button
                 circular
