@@ -35,7 +35,7 @@ const PasswordResetForm = () => {
   }
 
   async function handleSubmit(e) {
-    setDisableButton(true); // Disable the button as soon as it's clicked
+    setDisableButton(true);
     if (!email) return;
     if (turnstileEnabled && turnstileToken === '') {
       showInfo('请稍后几秒重试，Turnstile 正在检查用户环境！');
