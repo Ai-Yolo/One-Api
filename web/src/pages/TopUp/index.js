@@ -7,24 +7,32 @@ const TopUp = () => {
   const [redemptionCode, setRedemptionCode] = useState('');
   const [topUpLink, setTopUpLink] = useState('');
   const [userQuota, setUserQuota] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const topUp = async () => {
     if (redemptionCode === '') {
-      showInfo('请输入充值码！')
+      showInfo('请输入兑换码！')
       return;
     }
-    const res = await API.post('/api/user/topup', {
-      key: redemptionCode
-    });
-    const { success, message, data } = res.data;
-    if (success) {
-      showSuccess('充值成功！');
-      setUserQuota((quota) => {
-        return quota + data;
+    setIsSubmitting(true);
+    try {
+      const res = await API.post('/api/user/topup', {
+        key: redemptionCode
       });
-      setRedemptionCode('');
-    } else {
-      showError(message);
+      const { success, message, data } = res.data;
+      if (success) {
+        showSuccess('充值成功！');
+        setUserQuota((quota) => {
+          return quota + data;
+        });
+        setRedemptionCode('');
+      } else {
+        showError(message);
+      }
+    } catch (err) {
+      showError('请求失败');
+    } finally {
+      setIsSubmitting(false); 
     }
   };
 
@@ -71,11 +79,11 @@ const TopUp = () => {
                 setRedemptionCode(e.target.value);
               }}
             />
-            <Button color='green' onClick={openTopUpLink}>
-              获取兑换码
+            <Button color='red' onClick={openTopUpLink}>
+              购买兑换码
             </Button>
-            <Button color='yellow' onClick={topUp}>
-              充值
+            <Button color='green' onClick={topUp} disabled={isSubmitting}>
+                {isSubmitting ? '兑换中...' : '兑换'}
             </Button>
           </Form>
         </Grid.Column>
@@ -91,6 +99,5 @@ const TopUp = () => {
     </Segment>
   );
 };
-
 
 export default TopUp;
