@@ -17,8 +17,6 @@ const PersonalSetting = () => {
   const [turnstileSiteKey, setTurnstileSiteKey] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [loading, setLoading] = useState(false);
-  const [disableButton, setDisableButton] = useState(false);
-  const [countdown, setCountdown] = useState(30);
 
   useEffect(() => {
     let status = localStorage.getItem('status');
@@ -31,19 +29,6 @@ const PersonalSetting = () => {
       }
     }
   }, []);
-
-  useEffect(() => {
-    let countdownInterval = null;
-    if (disableButton && countdown > 0) {
-      countdownInterval = setInterval(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    } else if (countdown === 0) {
-      setDisableButton(false);
-      setCountdown(30);
-    }
-    return () => clearInterval(countdownInterval); // Clean up on unmount
-  }, [disableButton, countdown]);
 
   const handleInputChange = (e, { name, value }) => {
     setInputs((inputs) => ({ ...inputs, [name]: value }));
@@ -93,7 +78,6 @@ const PersonalSetting = () => {
   };
 
   const sendVerificationCode = async () => {
-    setDisableButton(true);
     if (inputs.email === '') return;
     if (turnstileEnabled && turnstileToken === '') {
       showInfo('请稍后几秒重试，Turnstile 正在检查用户环境！');
@@ -132,12 +116,12 @@ const PersonalSetting = () => {
     <div style={{ lineHeight: '40px' }}>
       <Header as='h3'>通用设置</Header>
       <Message>
-        每邀请一位新用户，您和被邀请用户均可获得1元(100000令牌)的奖励。
+        注意，此处生成的令牌用于系统管理，而非用于请求 OpenAI 相关的服务，请知悉。
       </Message>
       <Button as={Link} to={`/user/edit/`}>
         更新个人信息
       </Button>
-      {/* <Button onClick={generateAccessToken}>生成系统访问令牌</Button> */}
+      <Button onClick={generateAccessToken}>生成系统访问令牌</Button>
       <Button onClick={getAffLink}>复制邀请链接</Button>
       <Divider />
       <Header as='h3'>账号绑定</Header>
@@ -211,8 +195,8 @@ const PersonalSetting = () => {
                 name='email'
                 type='email'
                 action={
-                  <Button onClick={sendVerificationCode} disabled={disableButton || loading}>
-                    {disableButton ? `重新发送(${countdown})` : '获取验证码'}
+                  <Button onClick={sendVerificationCode} disabled={loading}>
+                    获取验证码
                   </Button>
                 }
               />

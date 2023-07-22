@@ -52,15 +52,15 @@ let headerButtons = [
     icon: 'setting'
   },
   {
-    name: '教程',
+    name: '关于',
     to: '/about',
     icon: 'info circle'
   }
 ];
 
 if (localStorage.getItem('chat_link')) {
-  headerButtons.push({
-    name: '公告',
+  headerButtons.splice(1, 0, {
+    name: '聊天',
     to: '/chat',
     icon: 'comments'
   });

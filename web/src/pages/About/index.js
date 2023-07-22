@@ -46,7 +46,9 @@ const About = () => {
             about.startsWith('https://') ? <iframe
               src={about}
               style={{ width: '100%', height: '100vh', border: 'none' }}
-            /> : <div style={{ fontSize: 'larger' }} dangerouslySetInnerHTML={{ __html: about }}></div>
+            /> : <Segment>
+              <div style={{ fontSize: 'larger' }} dangerouslySetInnerHTML={{ __html: about }}></div>
+            </Segment>
           }
         </>
       }

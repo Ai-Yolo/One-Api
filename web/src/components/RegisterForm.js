@@ -45,9 +45,7 @@ const RegisterForm = () => {
   });
 
   let navigate = useNavigate();
-  function handleNavigateTo(url) {
-    navigate(url);
-  }
+
   function handleChange(e) {
     const { name, value } = e.target;
     console.log(name, value);
@@ -180,23 +178,21 @@ const RegisterForm = () => {
               <></>
             )}
             <Button
-              color='green'
+              color=''
               fluid
               size='large'
               onClick={handleSubmit}
               loading={loading}
             >
-              确认注册
+              注册
             </Button>
           </Segment>
         </Form>
         <Message>
-          <Button onClick={() => handleNavigateTo('/reset')}>
-            忘记密码
-          </Button>
-          <Button onClick={() => handleNavigateTo('/login')}>
-            已有帐户
-          </Button>
+          已有账户？
+          <Link to='/login' className='btn btn-link'>
+            点击登录
+          </Link>
         </Message>
       </Grid.Column>
     </Grid>

@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"time"
-	"strconv"
 )
 
 func SetupGinLog() {
@@ -46,8 +45,7 @@ func FatalLog(v ...any) {
 
 func LogQuota(quota int) string {
 	if DisplayInCurrencyEnabled {
-		quotaFloat := float64(quota) / QuotaPerUnit
-		return fmt.Sprintf("￥%s 额度", strconv.FormatFloat(quotaFloat, 'f', -1, 64))
+		return fmt.Sprintf("＄%.6f 额度", float64(quota)/QuotaPerUnit)
 	} else {
 		return fmt.Sprintf("%d 点额度", quota)
 	}

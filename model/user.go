@@ -87,7 +87,7 @@ func (user *User) Insert(inviterId int) error {
 	}
 	user.Quota = common.QuotaForNewUser
 	user.AccessToken = common.GetUUID()
-	user.AffCode = common.GetRandomString(6)
+	user.AffCode = common.GetRandomString(4)
 	result := DB.Create(user)
 	if result.Error != nil {
 		return result.Error

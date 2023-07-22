@@ -190,7 +190,7 @@ const LogsTable = () => {
   return (
     <>
       <Segment>
-        <Header as='h3'>使用明细</Header>
+        <Header as='h3'>使用明细（总消耗额度：{renderQuota(stat.quota)}）</Header>
         <Form>
           <Form.Group>
             {

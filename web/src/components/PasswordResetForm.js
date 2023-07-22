@@ -13,29 +13,24 @@ const PasswordResetForm = () => {
   const [turnstileEnabled, setTurnstileEnabled] = useState(false);
   const [turnstileSiteKey, setTurnstileSiteKey] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
-  const [disableButton, setDisableButton] = useState(false);
-  const [countdown, setCountdown] = useState(30);
-  
+
   useEffect(() => {
-    let countdownInterval = null;
-    if (disableButton && countdown > 0) {
-      countdownInterval = setInterval(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    } else if (countdown === 0) {
-      setDisableButton(false);
-      setCountdown(30);
+    let status = localStorage.getItem('status');
+    if (status) {
+      status = JSON.parse(status);
+      if (status.turnstile_check) {
+        setTurnstileEnabled(true);
+        setTurnstileSiteKey(status.turnstile_site_key);
+      }
     }
-    return () => clearInterval(countdownInterval); // Clean up on unmount
-  }, [disableButton, countdown]);
+  }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setInputs(inputs => ({ ...inputs, [name]: value }));
+    setInputs((inputs) => ({ ...inputs, [name]: value }));
   }
 
   async function handleSubmit(e) {
-    setDisableButton(true);
     if (!email) return;
     if (turnstileEnabled && turnstileToken === '') {
       showInfo('请稍后几秒重试，Turnstile 正在检查用户环境！');
@@ -83,14 +78,13 @@ const PasswordResetForm = () => {
               <></>
             )}
             <Button
-              color='green'
+              color=''
               fluid
               size='large'
               onClick={handleSubmit}
               loading={loading}
-              disabled={disableButton}
             >
-              {disableButton ? `重试 (${countdown})` : '提交'}
+              提交
             </Button>
           </Segment>
         </Form>
