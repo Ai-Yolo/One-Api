@@ -142,7 +142,7 @@ export function renderQuota(quota, digits = 2) {
   let displayInCurrency = localStorage.getItem('display_in_currency');
   displayInCurrency = displayInCurrency === 'true';
   if (displayInCurrency) {
-    return '$' + calculateQuota(quota, digits);
+    return '￥' + calculateQuota(quota, digits);
   }
   return renderNumber(quota);
 }

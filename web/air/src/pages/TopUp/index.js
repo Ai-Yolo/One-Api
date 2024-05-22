@@ -253,11 +253,11 @@ const TopUp = () => {
                                         disabled={!enableOnlineTopUp}
                                         field={'redemptionCount'}
                                         label={'实付金额：' + renderAmount()}
-                                        placeholder={'充值数量，最低' + minTopUp + '$'}
+                                        placeholder={'充值数量，最低' + minTopUp + '￥'}
                                         name='redemptionCount'
                                         type={'number'}
                                         value={topUpCount}
-                                        suffix={'$'}
+                                        suffix={'￥'}
                                         min={minTopUp}
                                         defaultValue={minTopUp}
                                         max={100000}

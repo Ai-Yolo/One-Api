@@ -108,7 +108,7 @@ const SiderBar = () => {
       icon: <IconSetting />
     }
     // {
-    //     text: '关于',
+    //     text: '教程',
     //     itemKey: 'about',
     //     to: '/about',
     //     icon: <IconAt/>

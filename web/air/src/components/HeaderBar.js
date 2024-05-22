@@ -14,7 +14,7 @@ import { stringToColor } from '../helpers/render';
 // HeaderBar Buttons
 let headerButtons = [
   {
-    text: '关于',
+    text: '教程',
     itemKey: 'about',
     to: '/about',
     icon: <IconHelpCircle />
