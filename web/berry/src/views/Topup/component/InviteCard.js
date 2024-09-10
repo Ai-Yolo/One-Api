@@ -49,7 +49,7 @@ const InviteCard = () => {
             邀请奖励
           </Typography>
           <Typography variant="body" sx={{ color: theme.palette.primary.dark }}>
-            分享您的邀请链接，邀请好友注册，即可获得奖励！
+           分享邀请链接，您和好友均可获得1元奖励！
           </Typography>
 
           <OutlinedInput
